@@ -10,5 +10,12 @@
     @empty
         <div>No hay tareas</div>
     @endforelse
+
+    @if ($tasks -> count())
+        <div>
+            {{ $tasks -> links() }}
+        </div>
+    @endif
+
 @endsection
 
