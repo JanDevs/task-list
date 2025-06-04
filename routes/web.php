@@ -35,22 +35,23 @@ Route::get('/tasks/{task}', function( Task $task )  {
 })->name('tasks.show');
 
 Route::post('/tasks', function(TaskRequest $request){
-
     $task = Task::create($request -> validated());
 
     return redirect() -> route('tasks.show', ['task' => $task -> id])
         ->with('exito','Se creó la tarea exitosamente');
-
 })->name('tasks.store');
 
 Route::put('/tasks/{task}', function(Task $task, TaskRequest $request){
-
     $task -> update($request -> validated());
-
     return redirect() -> route('tasks.show', ['task' => $task -> id])
         ->with('exito','Se actualizó la tarea exitosamente');
-
 })->name('tasks.update');
+
+Route::delete('/tasks/{task}', function(Task $task){
+    $task -> delete();
+    return redirect() -> route('tasks.index')
+        -> with('success', 'Tarea borrada exitosamente');
+})->name('tasks.destroy');
 
 Route::fallback(function () {
     return 'No existe';
