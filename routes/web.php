@@ -53,6 +53,11 @@ Route::delete('/tasks/{task}', function(Task $task){
         -> with('success', 'Tarea borrada exitosamente');
 })->name('tasks.destroy');
 
+Route::put('/tasks/{task}/toggle-complete', function(Task $task){
+    $task -> toggleComplete();
+    return redirect() -> back() -> with('success', 'Tarea actualizada exitosamente');
+})->name('tasks.toggle-complete');
+
 Route::fallback(function () {
     return 'No existe';
 });
