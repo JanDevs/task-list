@@ -4,42 +4,45 @@
 
 @section('content')
 
-<p> {{ $task -> description }} </p>
+<div class="mb-4">
+    <a href="{{ route('tasks.index') }}"
+        class="link">Regresar a la lista</a>
+</div>
+
+<p class="mb-4 text-slate-700 "> {{ $task -> description }} </p>
 
 @if($task -> long_description)
-    <p> {{ $task -> long_description }} </p>
+    <p class="mb-4 text-slate-700 "> {{ $task -> long_description }} </p>
 @endif
 
-<p> {{ $task -> created_at }} </p>
-<p> {{ $task -> updated_at }} </p>
+<p class="mb-4 text-sm text-slate-500"> Creado {{ $task -> created_at -> diffForHumans() }}
+     - Actualizado {{ $task -> updated_at -> diffForHumans()  }}</p>
 
-<p>
+
+<p class="mb-4 ">
     @if($task -> completed)
-        Completado
+        <span class="font-medium text-green-500">Completado</span>
     @else
-        No completado
+        <span class="font-medium text-red-500">No completado</span>
     @endif
 </p>
 
-<div>
-    <a href="{{ route('tasks.edit', ['task' => $task ]) }}">Editar</a>
-</div>
+<div class="flex gap-2 ">
+    <a href="{{ route('tasks.edit', ['task' => $task ]) }}"
+        class="btn">Editar</a>
 
-<div>
     <form method="POST" action="{{ route('tasks.toggle-complete', ['task' => $task] )}}">
         @csrf
         @method('PUT')
-        <button type="submit">
+        <button type="submit" class="btn">
             Marcar como {{ $task -> completed ? 'No completado' : 'Completado' }}
         </button>
     </form>
-</div>
 
-<div>
     <form action="{{ route('tasks.destroy', ['task' => $task -> id]) }}" method="POST">
         @csrf
         @method('DELETE')
-        <button type="submit">Borrar</button>
+        <button type="submit" class="btn">Borrar</button>
     </form>
 </div>
 @endsection
